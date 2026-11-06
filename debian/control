@@ -1,0 +1,67 @@
+Source: pioarduino
+Section: devel
+Priority: optional
+Maintainer: Robert August Vincent II (Bob) <pillarsdotnet@gmail.com>
+# The runtime dependencies are build dependencies too, and unconditionally so:
+# dh_python3 writes ${python3:Depends} from the packages it finds installed, so
+# a build without one of them ships a deb that does not ask for it and cannot
+# import it. python3-ajsonrpc comes from the Forgejo registry on noble and
+# resolute, whose archives have none; registry-upload adds that apt source
+# before resolving these.
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-python3,
+ python3-all,
+ python3-setuptools,
+ python3-ajsonrpc,
+ python3-bottle,
+ python3-certifi,
+ python3-click,
+ python3-colorama,
+ python3-intelhex,
+ python3-marshmallow,
+ python3-pyelftools,
+ python3-requests,
+ python3-rich-click,
+ python3-semantic-version,
+ python3-serial,
+ python3-starlette,
+ python3-tabulate,
+ python3-uvicorn,
+ python3-wsproto,
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/pioarduino
+
+Package: pioarduino
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Recommends:
+ udev,
+# The fork ships the same "platformio" python module, the same pio,
+# platformio and piodebuggdb entry points and the same udev rule file as
+# platformio itself, so the two cannot be unpacked together. Provides lets a
+# package that depends on platformio be satisfied by this one, which is the
+# point of a drop-in fork.
+Conflicts:
+ platformio,
+Replaces:
+ platformio,
+Provides:
+ platformio,
+Description: PlatformIO fork tracking current Espressif platforms
+ pioarduino is the community fork of PlatformIO that keeps up with current
+ Espressif platforms - ESP32-C6, ESP32-H2, ESP32-P4 and the Arduino-ESP32 3.x
+ cores - which upstream PlatformIO 6.2 does not carry. It is otherwise the
+ same build system, and ships the same "pio" and "platformio" command-line
+ tools.
+ .
+ Toolchains, platform definitions and PIO Home are not part of this package:
+ they are downloaded into ~/.platformio on first use, per project. The fork
+ fetches its own SCons and PIO Home builds from its registry on GitHub rather
+ than from platformio.org.
+ .
+ This package conflicts with platformio: both ship the same module and the
+ same entry points. Install one or the other.

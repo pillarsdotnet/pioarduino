@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+# Copyright (c) 2026 Robert August Vincent II <pillarsdotnet@gmail.com>
+# Co-author: Claude Code.
+
+# The distribution is named pioarduino; the module inside it is still called
+# platformio, and so are two of the three entry points.
+export PYBUILD_NAME=pioarduino
+
+# The fork's sdist carries no tests at all -- upstream platformio's one test
+# module, which downloads toolchains from the network, is not in it.
+# debian/tests/control smoke-tests the installed package instead.
+export PYBUILD_DISABLE=test
+
+%:
+	dh $@ --buildsystem=pybuild
