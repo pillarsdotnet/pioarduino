@@ -32,7 +32,7 @@ Last-Update: 2026-11-05
 --- a/platformio/dependencies.py	2026-11-05 20:25:58.412346909 -0500
 +++ b/platformio/dependencies.py	2026-11-05 20:25:58.425532427 -0500
 @@ -30,7 +30,7 @@
- 
+
  def get_pip_dependencies():
      core = [
 -        "bottle == 0.13.*",
